@@ -1,0 +1,10 @@
+/.env
+/.idea/
+/vendor/
+coverage.xml
+clover.xml
+.php_cs.cache
+.vscode/
+data/
+logs/
+.DS_Store

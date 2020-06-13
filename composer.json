@@ -1,0 +1,47 @@
+{
+    "name": "karbowiak/hetznerascode",
+    "description": "HaC is a tool that can be used to work with Hetzner Cloud",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Michael Karbowiak",
+            "email": "michael@karbowiak.dk"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Hac\\": "app/"
+        },
+        "files": []
+    },
+    "require": {
+        "php": ">=7.4",
+        "ext-json": "*",
+        "friendsofphp/php-cs-fixer": "*",
+        "jolicode/jolinotif": "*",
+        "league/container": "*",
+        "nunomaduro/collision": "*",
+        "psy/psysh": "*",
+        "symfony/console": "*",
+        "symfony/filesystem": "*",
+        "symfony/finder": "*",
+        "symfony/yaml": "*",
+        "tightenco/collect": "*"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-master@dev",
+        "phpunit/phpunit": "^6.5",
+        "symfony/var-dumper": "^4.2.7"
+    },
+    "bin": [
+        "bin/hac"
+    ],
+    "config": {
+        "sort-packages": true,
+        "optimize-autoloader": true,
+        "preferred-install": {
+            "*": "dist"
+        }
+    }
+}

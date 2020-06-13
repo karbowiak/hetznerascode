@@ -1,0 +1,33 @@
+version: "3.2"
+
+networks:
+    internet:
+        external: true
+
+services:
+#    cron:
+#        image: eon/php
+#        container_name: cron
+#        build:
+#            context: ./docker/php
+#            dockerfile: Dockerfile
+#        volumes:
+#            - ./:/var/www
+#        networks:
+#            - internet
+#        command: ['/usr/local/bin/php', '/var/www/bin/Eon', 'cron']
+#        user: "1000"
+#        restart: unless-stopped
+#
+#    php:
+#        image: eon/php
+#        container_name: php
+#        build:
+#            context: ./docker/php
+#            dockerfile: Dockerfile
+#        volumes:
+#            - ./:/var/www
+#        networks:
+#            - internet
+#        user: "0"
+#        restart: unless-stopped

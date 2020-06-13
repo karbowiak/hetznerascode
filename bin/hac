@@ -1,0 +1,36 @@
+#!/usr/bin/env php
+<?php
+
+use Hac\Bootstrap;
+use NunoMaduro\Collision\Provider;
+use Symfony\Component\Console\Application;
+
+$autoloaderPath = __DIR__ . '/../vendor/autoload.php';
+$autoloader = file_exists($autoloaderPath) ?
+    require_once($autoloaderPath) :
+    new Exception('Error loading autoloader, please run composer install');
+
+if($autoloader instanceof Exception)
+    throw $autoloader;
+
+/** @var Bootstrap $container */
+$container = new Bootstrap($autoloader);
+$container->initContainer();
+$console = new Application('k');
+
+// Default commands
+$commands = glob(__DIR__ . '/../app/Commands/*.php');
+foreach($commands as $command) {
+    try {
+        $namespace = '\\Hac\\Commands\\';
+        $className = str_replace('.php', '', basename($command));
+        $fullClass = $namespace . $className;
+        $console->add(new $fullClass($container));
+    } catch (\Exception $e) {
+        dump("There was an error loading command: {$className} / " . $e->getMessage());
+    }
+}
+
+$errorHandler = (new Provider)->register();
+$console->setCatchExceptions(false);
+$console->run();
