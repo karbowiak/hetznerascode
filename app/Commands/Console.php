@@ -16,7 +16,7 @@ class Console extends CommandsInterface
     {
         try {
             // Check for php_manual
-            $manualPath = '/Users/karbowiak/.local/share/psysh';
+            $manualPath = '~/.local/share/psysh';
             $manualName = 'php_manual.sqlite';
             if (!is_dir($manualPath) && !mkdir($manualPath, 0777, true) && !is_dir($manualPath)) {
                 throw new \RuntimeException(sprintf('Directory "%s" was not created', $manualPath));
@@ -31,9 +31,6 @@ class Console extends CommandsInterface
         $shell = new Shell(new Configuration([]));
         $shell->setScopeVariables([
             'container' => $this->container,
-            'config' => $this->container->config,
-            'redis' => $this->container->redis,
-            'queue' => $this->container->queue
         ]);
         $shell->run();
     }
