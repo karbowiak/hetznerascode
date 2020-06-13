@@ -6,6 +6,9 @@ use Hac\Bootstrap;
 use InvalidArgumentException;
 use Joli\JoliNotif\Notification;
 use Joli\JoliNotif\NotifierFactory;
+use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Console\Question\ChoiceQuestion;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Command\Command as SymfonyConsole;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -272,6 +275,61 @@ class Command extends SymfonyConsole
     public function out(string $input, $newLine = true)
     {
         return $this->output->write($input, $newLine);
+    }
+
+    /**
+     * This one returns what the user inputs
+     *
+     * @param string $question
+     * @param mixed $default
+     *
+     * @return bool
+     */
+    public function ask(string $question, $default = '') {
+        $helper = $this->getHelper('question');
+        $q = new Question($question . ' ', $default);
+
+        return $helper->ask($this->input, $this->output, $q);
+    }
+
+    /**
+     * This one is usually asked for Y/n questions
+     *
+     * @param $question
+     * @param $default
+     *
+     * @return bool
+     */
+    public function askWithConfirmation(string $question, bool $default = true): bool {
+        $helper = $this->getHelper('question');
+        $q = new ConfirmationQuestion($question . ' ', $default);
+
+        if (!$helper->ask($this->input, $this->output, $q)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Ask a question consisting of multiple answers
+     *
+     * @param string $question
+     * @param array  $options
+     * @param int    $default
+     * @param bool   $multipleChoice
+     *
+     * @return mixed
+     */
+    public function askWithOptions(string $question, array $options, string $default = '0', bool $multipleChoice = false) {
+        $helper = $this->getHelper('question');
+        $q = new ChoiceQuestion($question . ' ', $options, $default);
+
+        if($multipleChoice) {
+            $q->setMultiSelect(true);
+        }
+
+        return $helper->ask($this->input, $this->output, $q);
     }
 
     /**

@@ -13,6 +13,12 @@ $autoloader = file_exists($autoloaderPath) ?
 if($autoloader instanceof Exception)
     throw $autoloader;
 
+// Load env
+$env = array_filter(explode("\n", file_get_contents(__DIR__ . '/../.env')));
+foreach($env as $e) {
+    putenv($e);
+}
+
 /** @var Bootstrap $container */
 $container = new Bootstrap($autoloader);
 $container->initContainer();
