@@ -27,7 +27,8 @@
         "symfony/filesystem": "*",
         "symfony/finder": "*",
         "symfony/yaml": "*",
-        "tightenco/collect": "*"
+        "tightenco/collect": "*",
+        "lkdevelopment/hetzner-cloud-php-sdk": "*"
     },
     "require-dev": {
         "roave/security-advisories": "dev-master@dev",

@@ -6,6 +6,7 @@ use Hac\Bootstrap;
 use InvalidArgumentException;
 use Joli\JoliNotif\Notification;
 use Joli\JoliNotif\NotifierFactory;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
@@ -330,6 +331,23 @@ class Command extends SymfonyConsole
         }
 
         return $helper->ask($this->input, $this->output, $q);
+    }
+
+    /**
+     * Render a table of information
+     *
+     * @param array $headers
+     * @param array $rows
+     */
+    public function table(array $headers, array $rows) {
+        try {
+            $table = new Table($this->output);
+            $table->setHeaders($headers);
+                $table->addRows([$rows]);
+            $table->render();
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
     }
 
     /**

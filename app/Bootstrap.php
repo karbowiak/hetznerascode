@@ -2,6 +2,7 @@
 
 namespace Hac;
 
+use Hac\Helpers\Hetzner;
 use Composer\Autoload\ClassLoader;
 use League\Container\Container;
 
@@ -38,6 +39,7 @@ class Bootstrap
         // Default container items
         $container->add('container', $container);
         $container->add('autoloader', $this->autoloader);
+        $container->add('hetzner', new Hetzner($this));
 
         $this->container = $container;
     }

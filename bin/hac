@@ -37,6 +37,6 @@ foreach($commands as $command) {
     }
 }
 
-$errorHandler = (new Provider)->register();
-$console->setCatchExceptions(false);
+//$errorHandler = (new Provider)->register();
+//$console->setCatchExceptions(true);
 $console->run();
