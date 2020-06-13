@@ -269,9 +269,9 @@ class Command extends SymfonyConsole
      *
      * @return mixed
      */
-    public function out(string $input, $options = [], $newLine = true)
+    public function out(string $input, $newLine = true)
     {
-        return $this->output->write($input, $newLine, $options);
+        return $this->output->write($input, $newLine);
     }
 
     /**
