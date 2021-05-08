@@ -18,23 +18,18 @@
     "require": {
         "php": "^8.0",
         "ext-json": "*",
-        "new3den/console": "*",
-        "friendsofphp/php-cs-fixer": "*",
-        "jolicode/jolinotif": "*",
         "league/container": "*",
-        "nunomaduro/collision": "*",
-        "psy/psysh": "*",
-        "symfony/console": "*",
-        "symfony/filesystem": "*",
-        "symfony/finder": "*",
+        "lkdevelopment/hetzner-cloud-php-sdk": "*",
+        "new3den/console": "*",
         "symfony/yaml": "*",
         "tightenco/collect": "*",
-        "lkdevelopment/hetzner-cloud-php-sdk": "*"
+        "vlucas/phpdotenv": "*"
     },
     "require-dev": {
         "roave/security-advisories": "dev-master@dev",
         "phpunit/phpunit": "*",
-        "symfony/var-dumper": "*"
+        "symfony/var-dumper": "*",
+        "friendsofphp/php-cs-fixer": "*"
     },
     "bin": [
         "bin/hac"

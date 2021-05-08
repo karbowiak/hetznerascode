@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Dotenv\Dotenv;
 use League\Container\ReflectionContainer;
 
 $autoloaderPath = __DIR__ . '/../vendor/autoload.php';
@@ -28,6 +29,9 @@ $cli->setConsoleName('Hetzner as Code');
 
 # Define the version
 $cli->setVersion('1.0.0');
+
+# Load the dotenv
+(Dotenv::createImmutable(dirname(__DIR__, 1)))->load();
 
 # Run the cli
 $cli->run();
