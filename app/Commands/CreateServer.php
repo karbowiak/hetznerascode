@@ -3,47 +3,61 @@
 namespace Hac\Commands;
 
 use Hac\Helpers\Hetzner;
+use LKDev\HetznerCloud\HetznerAPIClient;
 use New3den\Console\ConsoleCommand;
 
 class CreateServer extends ConsoleCommand
 {
     protected string $signature = 'create:server';
-
     protected string $description = 'Create a server';
+    protected HetznerAPIClient $client;
 
     public function __construct(
         protected Hetzner $hetzner,
         ?string $name = null
     ) {
         parent::__construct($name);
+        $this->client = $hetzner->getClient();
     }
 
+    /**
+     * @throws \LKDev\HetznerCloud\APIException
+     */
     public function handle(): void
     {
-        $hetzner = $this->hetzner->getClient();
         // Get data from Hetzner
-        $serverTypes = $hetzner->serverTypes()->all();
-        $images = $hetzner->images()->all();
+        $serverTypes = $this->client->serverTypes()->all();
+        $images = $this->client->images()->all();
+        $locations = $this->client->locations()->all();
+        $sshKeys = $this->client->sshKeys()->all();
 
         // Ask questions
-        $serverName = strtolower(html_entity_decode($this->ask('Server name')));
-        $serverType = $this->askWithOptions('Select server type', array_map(function($server) {
+        $name = strtolower(html_entity_decode($this->ask('Server name')));
+        $location = $this->askWithOptions('Server location', array_map(function($location) {
+            return $location->name;
+        }, $locations));
+        $type = $this->askWithOptions('Select server type', array_map(function($server) {
             return $server->name;
         }, $serverTypes));
         $image = $this->askWithOptions('Select image to deploy', array_map(function($image) {
             return $image->name;
         }, $images));
+        $sshKey = $this->askWithOptions('Select SSH Key to use', array_map(function($sshKey) {
+            return $sshKey->name;
+        }, $sshKeys));
 
         // Output the server information
-        $this->table(['name', 'type', 'image'], [$serverName, $serverType, $image]);
+        $this->table(['name', 'type', 'image', 'location', 'sshKey'], [$name, $type, $image, $location, $sshKey]);
 
         // Create server
-        $server = $hetzner->servers()->createInLocation(
-            $serverName,
-            $hetzner->serverTypes()->get($serverType),
-            $hetzner->images()->get($image),
-            $hetzner->locations()->get('fsn1'),
-            [],
+        $server = $this->client->servers()->createInLocation(
+            $name,
+            $this->client->serverTypes()->get($type),
+            $this->client->images()->get($image),
+            $this->client->locations()->get($location),
+            [
+                $sshKey
+            ],
             true,
             '',
             [],

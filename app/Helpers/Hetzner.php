@@ -10,7 +10,7 @@ class Hetzner
 
     public function __construct()
     {
-        $this->hetzner = new HetznerAPIClient(getenv('HETZNERTOKEN'));
+        $this->hetzner = new HetznerAPIClient($_ENV['HETZNERTOKEN']);
     }
 
     public function getClient(): HetznerAPIClient
