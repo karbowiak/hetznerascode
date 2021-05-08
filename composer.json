@@ -16,8 +16,9 @@
         "files": []
     },
     "require": {
-        "php": ">=7.4",
+        "php": "^8.0",
         "ext-json": "*",
+        "new3den/console": "*",
         "friendsofphp/php-cs-fixer": "*",
         "jolicode/jolinotif": "*",
         "league/container": "*",
@@ -32,8 +33,8 @@
     },
     "require-dev": {
         "roave/security-advisories": "dev-master@dev",
-        "phpunit/phpunit": "^6.5",
-        "symfony/var-dumper": "^4.2.7"
+        "phpunit/phpunit": "*",
+        "symfony/var-dumper": "*"
     },
     "bin": [
         "bin/hac"

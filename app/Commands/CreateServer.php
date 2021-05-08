@@ -2,36 +2,28 @@
 
 namespace Hac\Commands;
 
-use Hac\Bootstrap;
 use Hac\Helpers\Hetzner;
-use LKDev\HetznerCloud\APIException;
-use Hac\Interfaces\CommandsInterface;
-use Psy\Configuration;
-use Psy\Shell;
-use LKDev\HetznerCloud\HetznerAPIClient;
-use Symfony\Component\Console\Question\ConfirmationQuestion;
+use New3den\Console\ConsoleCommand;
 
-class CreateServer extends CommandsInterface
+class CreateServer extends ConsoleCommand
 {
     protected string $signature = 'create:server';
 
     protected string $description = 'Create a server';
 
-    protected HetznerAPIClient $hetzner;
-
     public function __construct(
-        Bootstrap $container,
-        string $name = null
+        protected Hetzner $hetzner,
+        ?string $name = null
     ) {
-        parent::__construct($container, $name);
-        $this->hetzner = $container->get('hetzner')->hetzner;
+        parent::__construct($name);
     }
 
     public function handle(): void
     {
+        $hetzner = $this->hetzner->getClient();
         // Get data from Hetzner
-        $serverTypes = $this->hetzner->serverTypes()->all();
-        $images = $this->hetzner->images()->all();
+        $serverTypes = $hetzner->serverTypes()->all();
+        $images = $hetzner->images()->all();
 
         // Ask questions
         $serverName = strtolower(html_entity_decode($this->ask('Server name')));
@@ -46,11 +38,11 @@ class CreateServer extends CommandsInterface
         $this->table(['name', 'type', 'image'], [$serverName, $serverType, $image]);
 
         // Create server
-        $server = $this->hetzner->servers()->createInLocation(
+        $server = $hetzner->servers()->createInLocation(
             $serverName,
-            $this->hetzner->serverTypes()->get($serverType),
-            $this->hetzner->images()->get($image),
-            $this->hetzner->locations()->get('fsn1'),
+            $hetzner->serverTypes()->get($serverType),
+            $hetzner->images()->get($image),
+            $hetzner->locations()->get('fsn1'),
             [],
             true,
             '',
