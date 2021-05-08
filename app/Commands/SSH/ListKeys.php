@@ -29,7 +29,7 @@ class ListKeys extends ConsoleCommand
     {
         $keys = $this->client->sshKeys()->all();
 
-        $this->table(['name', 'fingerprint', 'key', 'labels'], array_map(function($key) {
+        $this->table(['name', 'fingerprint', 'key', 'labels'], array_map(static function($key) {
             /** @var SSHKey $key */
             return [
                 $key->name,

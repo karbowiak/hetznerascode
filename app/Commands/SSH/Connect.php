@@ -37,7 +37,7 @@ class Connect extends ConsoleCommand
     {
         $servers = $this->client->servers()->all();
         if ($this->server === null) {
-            $server = $this->askWithOptions('Select server you want to connect to', array_map(function ($server) {
+            $server = $this->askWithOptions('Select server you want to connect to', array_map(static function ($server) {
                 /** @var Server $server */
                 if ($server->status === 'running') {
                     return $server->name;

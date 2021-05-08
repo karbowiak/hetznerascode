@@ -38,7 +38,7 @@ class Add extends ConsoleCommand
         } else {
             $publicKey = $this->ask('What is the public key contents?');
         }
-        $label = $this->ask('What are the labels for this? seperate multiple labels by comma', '');
+        $label = $this->ask('What are the labels for this? separate multiple labels by comma', '');
         $labels = !empty($label) ? explode(',', $label) : [];
 
         /** @var SSHKey $result */

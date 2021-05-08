@@ -33,16 +33,16 @@ class CreateServer extends ConsoleCommand
 
         // Ask questions
         $name = strtolower(html_entity_decode($this->ask('Server name')));
-        $location = $this->askWithOptions('Server location', array_map(function($location) {
+        $location = $this->askWithOptions('Server location', array_map(static function($location) {
             return $location->name;
         }, $locations));
-        $type = $this->askWithOptions('Select server type', array_map(function($server) {
+        $type = $this->askWithOptions('Select server type', array_map(static function($server) {
             return $server->name;
         }, $serverTypes));
-        $image = $this->askWithOptions('Select image to deploy', array_map(function($image) {
+        $image = $this->askWithOptions('Select image to deploy', array_map(static function($image) {
             return $image->name;
         }, $images));
-        $sshKey = $this->askWithOptions('Select SSH Key to use', array_map(function($sshKey) {
+        $sshKey = $this->askWithOptions('Select SSH Key to use', array_map(static function($sshKey) {
             return $sshKey->name;
         }, $sshKeys));
 
